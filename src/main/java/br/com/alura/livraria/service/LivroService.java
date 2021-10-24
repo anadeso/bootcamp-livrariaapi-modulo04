@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,12 +40,19 @@ public class LivroService {
     @Transactional
     public LivroDto cadastrar(LivroFormDto livroFormDto) {
         Livro livro = modelMapper.map(livroFormDto, Livro.class);
-        Autor autor = autorRepository.getById(livroFormDto.getAutorId());
+        Long autorId = livroFormDto.getAutorId();
 
-        livro.setId(null);
-        livro.setAutor(autor);
-        livroRepository.save(livro);
+        try {
+            Autor autor = autorRepository.getById(autorId);
 
-        return modelMapper.map(livro, LivroDto.class);
+            livro.setId(null);
+            livro.setAutor(autor);
+
+            livroRepository.save(livro);
+
+            return modelMapper.map(livro, LivroDto.class);
+        } catch (EntityNotFoundException e) {
+            throw new IllegalArgumentException("Autor inexistente!");
+        }
     }
 }
