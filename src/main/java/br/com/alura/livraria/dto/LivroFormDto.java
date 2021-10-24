@@ -18,16 +18,16 @@ import java.time.LocalDate;
 @Setter
 public class LivroFormDto {
 
-    @NotBlank(message = "Nao deve ser nulo")
-    @Size(min = 10, max = 40, message = "Tamanho deve estar entre 10 e 40")
+    @NotBlank
+    @Size(min = 10, max = 40)
     private String titulo;
 
     @NotNull
-    @PastOrPresent(message = "Deve estar no presente ou passado")
+    @PastOrPresent
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataLancamento;
 
-    @Min(100)
+    @Min(value = 100, message = "{livro.numeroPagina.invalido}")
     private int numeroPagina;
 
     @JsonAlias("autor_id")
