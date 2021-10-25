@@ -1,5 +1,6 @@
 package br.com.alura.livraria.service;
 
+import br.com.alura.livraria.dto.AtualizacaoLivroFormDto;
 import br.com.alura.livraria.dto.LivroDto;
 import br.com.alura.livraria.dto.LivroFormDto;
 
@@ -8,6 +9,8 @@ import br.com.alura.livraria.entities.Livro;
 
 import br.com.alura.livraria.repositories.AutorRepository;
 import br.com.alura.livraria.repositories.LivroRepository;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @Service
 public class LivroService {
@@ -52,5 +57,13 @@ public class LivroService {
         } catch (EntityNotFoundException e) {
             throw new IllegalArgumentException("Autor inexistente!");
         }
+    }
+
+    @Transactional
+    public LivroDto atualizar(AtualizacaoLivroFormDto dto) {
+        Livro livro = livroRepository.getById(dto.getId());
+
+        livro.atualizarInformacoes(dto.getTitulo(), dto.getDataLancamento(), dto.getNumeroPagina());
+        return modelMapper.map(livro, LivroDto.class);
     }
 }

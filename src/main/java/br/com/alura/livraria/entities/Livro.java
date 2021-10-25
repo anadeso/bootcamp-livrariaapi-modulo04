@@ -40,4 +40,10 @@ public class Livro {
         this.numeroPagina = numeroPagina;
         this.autor = autor;
     }
+
+    public void atualizarInformacoes(String titulo, LocalDate dataLancamento, int numeroPagina) {
+        this.titulo = titulo;
+        this.dataLancamento = dataLancamento;
+        this.numeroPagina = numeroPagina;
+    }
 }
