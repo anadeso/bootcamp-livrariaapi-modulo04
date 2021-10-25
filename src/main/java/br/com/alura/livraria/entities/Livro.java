@@ -33,4 +33,11 @@ public class Livro {
     @ManyToOne
     @JoinColumn(name = "autor_id")
     private Autor autor;
+
+    public Livro(String titulo, LocalDate dataLancamento, Integer numeroPagina, Autor autor) {
+        this.titulo = titulo;
+        this.dataLancamento = dataLancamento;
+        this.numeroPagina = numeroPagina;
+        this.autor = autor;
+    }
 }
