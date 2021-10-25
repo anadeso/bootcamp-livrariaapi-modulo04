@@ -7,7 +7,6 @@ import br.com.alura.livraria.dto.AutorFormDto;
 import br.com.alura.livraria.entities.Autor;
 
 import br.com.alura.livraria.repositories.AutorRepository;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.constraints.*;
-import java.time.LocalDate;
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class AutorService {
@@ -48,6 +46,18 @@ public class AutorService {
         Autor autor = autorRepository.getById(dto.getId());
 
         autor.atualizarInformacoes(dto.getNome(), dto.getEmail(), dto.getDataNascimento(), dto.getMiniCurriculo());
+        return modelMapper.map(autor, AutorDto.class);
+    }
+
+    @Transactional
+    public void remover(Long id) {
+        autorRepository.deleteById(id);
+    }
+
+    public AutorDto listarPorId(Long id) {
+        Autor autor = autorRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException());
         return modelMapper.map(autor, AutorDto.class);
     }
 }

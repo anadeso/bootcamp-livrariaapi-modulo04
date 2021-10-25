@@ -4,21 +4,18 @@ import br.com.alura.livraria.dto.AtualizacaoAutorDto;
 import br.com.alura.livraria.dto.AutorDto;
 import br.com.alura.livraria.dto.AutorFormDto;
 
-import br.com.alura.livraria.dto.LivroDto;
 import br.com.alura.livraria.service.AutorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 
 @RestController
@@ -48,6 +45,15 @@ public class AutorResource {
         return ResponseEntity.ok(atualizada);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AutorDto> delete(@PathVariable @Valid Long id) {
+        autorService.remover(id);
+        return ResponseEntity.noContent().build();
+    }
 
-
+    @GetMapping("/{id}")
+    public ResponseEntity<AutorDto> listaPorId(@PathVariable @NotNull Long id) {
+        AutorDto dto = autorService.listarPorId(id);
+        return ResponseEntity.ok(dto);
+    }
 }
