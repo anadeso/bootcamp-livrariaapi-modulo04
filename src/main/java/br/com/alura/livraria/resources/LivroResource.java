@@ -49,7 +49,7 @@ public class LivroResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<LivroDto> atualizar(@PathVariable @NotNull Long id) {
+    public ResponseEntity<LivroDto> delete(@PathVariable @NotNull Long id) {
         livroService.remover(id);
         return ResponseEntity.noContent().build();
     }
