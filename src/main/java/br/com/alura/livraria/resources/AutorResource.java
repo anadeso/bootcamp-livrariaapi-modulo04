@@ -1,5 +1,6 @@
 package br.com.alura.livraria.resources;
 
+import br.com.alura.livraria.dto.AtualizacaoAutorDto;
 import br.com.alura.livraria.dto.AutorDto;
 import br.com.alura.livraria.dto.AutorFormDto;
 
@@ -40,4 +41,13 @@ public class AutorResource {
                 .buildAndExpand(autorDto.getId()).toUri();
         return ResponseEntity.created(uri).body(autorDto);
     }
+
+    @PutMapping
+    public ResponseEntity<AutorDto> atualizar(@RequestBody @Valid AtualizacaoAutorDto dto) {
+        AutorDto atualizada = autorService.atualizar(dto);
+        return ResponseEntity.ok(atualizada);
+    }
+
+
+
 }

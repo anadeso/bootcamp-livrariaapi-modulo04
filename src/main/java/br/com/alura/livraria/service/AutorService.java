@@ -1,11 +1,13 @@
 package br.com.alura.livraria.service;
 
+import br.com.alura.livraria.dto.AtualizacaoAutorDto;
 import br.com.alura.livraria.dto.AutorDto;
 import br.com.alura.livraria.dto.AutorFormDto;
 
 import br.com.alura.livraria.entities.Autor;
 
 import br.com.alura.livraria.repositories.AutorRepository;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @Service
 public class AutorService {
@@ -35,6 +40,14 @@ public class AutorService {
         autor.setId(null);
 
         autorRepository.save(autor);
+        return modelMapper.map(autor, AutorDto.class);
+    }
+
+    @Transactional
+    public AutorDto atualizar(AtualizacaoAutorDto dto) {
+        Autor autor = autorRepository.getById(dto.getId());
+
+        autor.atualizarInformacoes(dto.getNome(), dto.getEmail(), dto.getDataNascimento(), dto.getMiniCurriculo());
         return modelMapper.map(autor, AutorDto.class);
     }
 }
