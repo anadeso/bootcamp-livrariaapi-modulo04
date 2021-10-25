@@ -1,12 +1,14 @@
 package br.com.alura.livraria.repository;
 
 import br.com.alura.livraria.dto.ItemAutorDto;
+import br.com.alura.livraria.dto.LivroFormDto;
 import br.com.alura.livraria.entities.Autor;
 import br.com.alura.livraria.entities.Livro;
 import br.com.alura.livraria.repositories.LivroRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -133,4 +136,5 @@ public class LivroRepositoryTest {
                         Assertions.tuple("Rodrigo de Souza", 1l, 0.142857)
                 );
     }
+
 }
