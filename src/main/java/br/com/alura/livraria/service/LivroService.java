@@ -66,4 +66,14 @@ public class LivroService {
         livro.atualizarInformacoes(dto.getTitulo(), dto.getDataLancamento(), dto.getNumeroPagina());
         return modelMapper.map(livro, LivroDto.class);
     }
+
+    @Transactional
+    public void remover(Long id) {
+        livroRepository.deleteById(id);
+    }
+
+    public LivroDto listarPorId(Long id) {
+        Livro livro = livroRepository.getById(id);
+        return modelMapper.map(livro, LivroDto.class);
+    }
 }

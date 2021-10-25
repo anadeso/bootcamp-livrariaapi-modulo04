@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 
 @RestController
@@ -46,4 +47,17 @@ public class LivroResource {
         LivroDto atualizada = livroService.atualizar(dto);
         return ResponseEntity.ok(atualizada);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<LivroDto> atualizar(@PathVariable @NotNull Long id) {
+        livroService.remover(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LivroDto> listaPorId(@PathVariable @NotNull Long id) {
+        LivroDto dto = livroService.listarPorId(id);
+        return ResponseEntity.ok(dto);
+    }
+
 }
