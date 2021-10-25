@@ -73,7 +73,9 @@ public class LivroService {
     }
 
     public LivroDto listarPorId(Long id) {
-        Livro livro = livroRepository.getById(id);
+        Livro livro = livroRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException());
         return modelMapper.map(livro, LivroDto.class);
     }
 }
